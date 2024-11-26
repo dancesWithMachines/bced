@@ -54,10 +54,23 @@ def fetch_exchange_rates():
             timestamp = datetime.fromtimestamp(int(key) / 1000)
             timestamp = timezone.make_aware(timestamp, timezone.get_default_timezone())
 
-            if ExchangeRate.objects.filter(timestamp=timestamp, currency_pair=currency_pair).exists():
+            if ExchangeRate.objects.filter(
+                timestamp=timestamp, base_currency__code=pair[0], second_currency__code=pair[1]
+            ).exists():
                 continue
 
-            data = {"currency_pair": currency_pair, "timestamp": timestamp, "exchange_rate": value}
+            try:
+                base_currency = Currency.objects.get(code=pair[0])
+                second_currency = Currency.objects.get(code=pair[1])
+            except Currency.DoesNotExist as e:
+                raise ValueError(f"Currency {e} does not exist!")
+
+            data = {
+                "base_currency": base_currency.id,
+                "second_currency": second_currency.id,
+                "timestamp": timestamp,
+                "exchange_rate": value
+            }
 
             seralizer = ExchangeRateSerializer(data=data)
 

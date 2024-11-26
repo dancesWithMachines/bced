@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-d(28mr%en(&jmt+ox@vl3s!m&f*l^whyk_8m7_lwh=+u+j2fhq
 DEBUG = True
 
 # Allow other clients in local network to connect to the host via alias
-ALLOWED_HOSTS = [socket.gethostname(), "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = [socket.gethostname(), "localhost", "127.0.0.1", "meh"]
 
 # Application definition
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
     'django_apscheduler',
     'currency',
 ]
@@ -151,4 +152,9 @@ LOGGING = {
             'propagate': False,
         },
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS':
+    ['django_filters.rest_framework.DjangoFilterBackend', 'rest_framework.filters.OrderingFilter']
 }

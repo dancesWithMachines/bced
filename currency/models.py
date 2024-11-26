@@ -12,12 +12,13 @@ class Currency(models.Model):
 
 
 class ExchangeRate(models.Model):
-    currency_pair = models.CharField(max_length=6)
+    base_currency = models.ForeignKey(Currency, on_delete=models.CASCADE, related_name="base_currency")
+    second_currency = models.ForeignKey(Currency, on_delete=models.CASCADE, related_name="second_currency")
     timestamp = models.DateTimeField()
     exchange_rate = models.FloatField()
 
     def __str__(self) -> str:
-        return self.currency_pair
+        return f'{self.base_currency}{self.second_currency}'
 
     class Meta:
         ordering = ['timestamp']

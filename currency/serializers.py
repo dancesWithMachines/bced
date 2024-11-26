@@ -13,4 +13,4 @@ class ExchangeRateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExchangeRate
-        fields = ["currency_pair", "timestamp", "exchange_rate"]
+        fields = ["base_currency", "second_currency", "timestamp", "exchange_rate"]

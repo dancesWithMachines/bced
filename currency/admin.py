@@ -11,11 +11,11 @@ admin.site.unregister(Group)
 
 @admin.register(ExchangeRate)
 class ExchangeRateAdmin(admin.ModelAdmin):
-    list_display = ("currency_pair", "timestamp", "exchange_rate")
-    list_filter = ("currency_pair",)
-    ordering = ("currency_pair", "timestamp")
-    search_fields = ("currency_pair",)
+    list_display = ("base_currency", "second_currency", "timestamp", "exchange_rate")
+    list_filter = ("base_currency",)
+    ordering = ("base_currency", "timestamp")
+    search_fields = ("base_currency",)
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        return queryset.order_by("currency_pair", "timestamp")
+        return queryset.order_by("base_currency", "timestamp")
